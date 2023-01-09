@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  pet: pet.yml 
+
+services: 
+  http: 
+    OwnerService:
+      auth: true 
+      base-path: /owner
+      endpoints:
+        add: 
+          display-name: Add an owner 
+          docs: Add a new owner as a customer of the store.
+          path: /
+          method: POST
+          request: 
+            name: AddOwnerRequest
+            body:
+              properties:
+                name: string 
+                age: optional<integer>
+                pets: list<pet.Pet> 
+          response: PetOwner
+
+types: 
+  PetOwner: 
+    union: 
+      customer: StoreCustomer
+      employee: StoreEmployee
+    
+  StoreCustomer:
+    properties:
+      name: string 
+      age: optional<integer>
+      pets: list<pet.Pet>
+      lifetime_spend: double 
+  
+  StoreEmployee:
+    extends: StoreCustomer 
+    properties:
+      employeeId: uuid
