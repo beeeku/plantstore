@@ -5,11 +5,11 @@ groups:
         version: 0.0.254
         output:
           location: npm
-          package-name: '@fern-api/{company}'
+          package-name: '@fern-api/petstore'
           token: ${FERN_NPM_TOKEN}
         github:
-          repository: fern-{company}/{company}-node
+          repository: fern-petstore/petstore-node
       - name: fernapi/fern-openapi
         version: 0.0.14
         github:
-          repository: fern-{company}/{company}-openapi
+          repository: fern-petstore/petstore-openapi

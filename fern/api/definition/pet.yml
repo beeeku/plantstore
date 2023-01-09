@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+services: 
+  http: 
+    PetService:
+      auth: true 
+      base-path: /pet
+      endpoints:
+        add: 
+          display-name: Add a pet 
+          docs: Add a new pet to the store.
+          path: /
+          method: POST
+          request: 
+            name: AddPetRequest
+            body:
+              properties:
+                id: optional<PetId>
+                category: optional<PetCategory>
+                name: string 
+                photoUrls: map<string,string>
+                status: optional<PetStatus>
+          errors: 
+            - InvalidResponseError
+          examples: 
+            - request: 
+                id: 309e5e64-7c5b-4433-a645-effa0683228e
+                category: 
+                  id: 2c1e5e33-6633-400f-8d87-bf4e81506dff
+                  name: Dog
+                name: Markley
+                photoUrls:
+                  smiling: https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-15/168735118_550085559291238_7811318320849179199_n.jpg?stp=dst-jpg_e35&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_cat=110&_nc_ohc=RGWAh2JjszsAX-h3qUI&tn=lDBuWm7D32pYEQeN&edm=ACWDqb8BAAAA&ccb=7-5&ig_cache_key=MjU0NTYxMTczNDk4ODA5NDA2NA%3D%3D.2-ccb7-5&oh=00_AfAW97yhRaCcWwvBLK7uggaNn4SCt0-qyOZjkzmIvfR7rQ&oe=63C15AB3&_nc_sid=1527a3>
+                status: available
+              response: 
+                error: InvalidResponseError
+        find: 
+          display-name: Find pet by ID
+          method: GET 
+          path: /{petId}
+          path-parameters:
+            petId: PetId 
+          response: Pet
+          errors: 
+            - PetNotFoundError
+            - InvalidIdSuppliedError
+          examples: 
+            - path-parameters:
+                petId: 309e5e64-7c5b-4433-a645-effa0683228e
+              response: 
+                body: 
+                  id: 309e5e64-7c5b-4433-a645-effa0683228e
+                  category: 
+                    id: 2c1e5e33-6633-400f-8d87-bf4e81506dff
+                    name: Dog
+                  name: Markley
+                  photoUrls:
+                    smiling: https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-15/168735118_550085559291238_7811318320849179199_n.jpg?stp=dst-jpg_e35&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_cat=110&_nc_ohc=RGWAh2JjszsAX-h3qUI&tn=lDBuWm7D32pYEQeN&edm=ACWDqb8BAAAA&ccb=7-5&ig_cache_key=MjU0NTYxMTczNDk4ODA5NDA2NA%3D%3D.2-ccb7-5&oh=00_AfAW97yhRaCcWwvBLK7uggaNn4SCt0-qyOZjkzmIvfR7rQ&oe=63C15AB3&_nc_sid=1527a3>
+                  status: available
+            - path-parameters:
+                petId: az123456789
+              response: 
+                error: InvalidIdSuppliedError
+            - path-parameters:
+                petId: 309e5e64-7c5b-4433-a645-effa0683228e
+              response: 
+                error: PetNotFoundError
+
+types:
+  PetId: uuid 
+  CategoryId: uuid
+
+  PetCategory: 
+    properties:
+      id: CategoryId 
+      name: string 
+
+  PetStatus: 
+    enum: 
+      - available
+      - pending
+      - sold
+
+  Pet: 
+    properties:
+      id: optional<PetId>
+      category: optional<PetCategory>
+      name: string 
+      photoUrls: map<string,string>
+      status: optional<PetStatus>
+      
+  
+errors: 
+  InvalidResponseError:
+    status-code: 405
+    docs: Invalid input
+  
+  PetNotFoundError:
+    status-code: 404
+  
+  InvalidIdSuppliedError: 
+    status-code: 400
+  
+
