@@ -2,14 +2,31 @@ groups:
   external:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.0.254
+        version: 0.0.255
         output:
           location: npm
           package-name: "@fern-api/plantstore"
           token: ${FERN_NPM_TOKEN}
         github:
-          repository: fern-plantstore/plantstore-node
+          repository: fern-api/plantstore-node
+      - name: fernapi/fern-java-sdk
+        version: 0.0.132
+        output:
+          location: maven
+          coordinate: io.github.fern-api:plantstore
+          username: ${MAVEN_USERNAME}
+          password: ${MAVEN_PASSWORD}
+        github:
+          repository: fern-api/plantstore-java
       - name: fernapi/fern-openapi
         version: 0.0.14
         github:
-          repository: fern-plantstore/plantstore-openapi
+          repository: fern-api/plantstore-openapi
+      - name: fernapi/fern-postman
+        version: 0.0.32
+        output:
+          location: postman
+          api-key: ${FERN_POSTMAN_API_KEY}
+          workspace-id: ${FERN_POSTMAN_WORKSPACE_ID}
+        github:
+          repository: fern-api/plantstore-postman
