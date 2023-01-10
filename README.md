@@ -15,7 +15,7 @@ This repository contains
 
 ## What is in the API Definition?
 
-The API Definition contains information about what endpoints, types, and errors are used in the API. The definition is broken into smaller files such as [{TODO}.yml](fern/api/definition/{TODO}.yml) and [{TODO}.yml](fern/api/definition/{TODO}.yml).
+The API Definition contains information about what endpoints, types, and errors are used in the API. The definition is broken into smaller files such as [plant.yml](fern/api/definition/plant.yml) and [owner.yml](fern/api/definition/owner.yml).
 
 In order to make sure that the definition is valid, you can use the Fern CLI.
 
