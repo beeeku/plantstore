@@ -65,6 +65,18 @@ services:
                 petId: 309e5e64-7c5b-4433-a645-effa0683228e
               response: 
                 error: PetNotFoundError
+        delete: 
+          display-name: Delete pet by ID 
+          method: DELETE 
+          path: /{petId}
+          path-parameters:
+            petId: PetId 
+          errors: 
+            - PetNotFoundError
+            - InvalidIdSuppliedError
+          examples: 
+            - path-parameters:
+                petId: 309e5e64-7c5b-4433-a645-effa0683228e
 
 types:
   PetId: uuid 

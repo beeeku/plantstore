@@ -19,11 +19,42 @@ services:
             body:
               properties:
                 name: string 
-                age: optional<integer>
+                age: OwnerAge
                 pets: list<pet.Pet> 
           response: PetOwner
+          errors: 
+            - OwnerNotFoundError
+          examples: 
+            - request: 
+                name: Danny
+                age: adult
+                pets: 
+                  - id: 309e5e64-7c5b-4433-a645-effa0683228e
+                    category: 
+                      id: 2c1e5e33-6633-400f-8d87-bf4e81506dff
+                      name: Dog
+                    name: Markley
+                    photoUrls:
+                      smiling: https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-15/168735118_550085559291238_7811318320849179199_n.jpg?stp=dst-jpg_e35&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_cat=110&_nc_ohc=RGWAh2JjszsAX-h3qUI&tn=lDBuWm7D32pYEQeN&edm=ACWDqb8BAAAA&ccb=7-5&ig_cache_key=MjU0NTYxMTczNDk4ODA5NDA2NA%3D%3D.2-ccb7-5&oh=00_AfAW97yhRaCcWwvBLK7uggaNn4SCt0-qyOZjkzmIvfR7rQ&oe=63C15AB3&_nc_sid=1527a3>
+                    status: available
+              response: 
+                error: OwnerNotFoundError
+                  
+        delete: 
+          display-name: Delete an owner 
+          path: /{ownerId}
+          path-parameters:
+            ownerId: OwnerId           
 
 types: 
+  OwnerId: uuid
+
+  OwnerAge: 
+    enum: 
+      - child
+      - adult
+      - senior
+
   PetOwner: 
     union: 
       customer: StoreCustomer
@@ -35,8 +66,17 @@ types:
       age: optional<integer>
       pets: list<pet.Pet>
       lifetime_spend: double 
+      id: OwnerId
   
   StoreEmployee:
     extends: StoreCustomer 
     properties:
-      employeeId: uuid
+      employeeId: EmployeeId 
+
+  EmployeeId: 
+    type: uuid
+    docs: a unique identified for each store employee
+
+errors: 
+  OwnerNotFoundError:
+    status-code: 400
