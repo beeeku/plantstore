@@ -2,8 +2,10 @@
 
 Tagging a release on this repository will update the:
 
-- [Node.js SDK repo](https://github.com/fern-plantstore/plantstore-node)
-- [OpenAPI description repo](https://github.com/fern-plantstore/plantstore-openapi)
+- [Node.js SDK repo](https://github.com/fern-api/plantstore-node)
+- [Java SDK repo](https://github.com/fern-api/plantstore-java)
+- [OpenAPI description repo](https://github.com/fern-api/plantstore-openapi)
+- [Postman Collection repo](https://github.com/fern-api/plantstore-postman)
 - _More SDKs to come..._
 
 ## What is in this repository?
