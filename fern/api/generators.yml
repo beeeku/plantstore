@@ -14,8 +14,8 @@ groups:
         output:
           location: maven
           coordinate: io.github.fern-api:plantstore
-          username: ${MAVEN_USERNAME}
-          password: ${MAVEN_PASSWORD}
+          username: ${FERN_MAVEN_USERNAME}
+          password: ${FERN_MAVEN_PASSWORD}
         github:
           repository: fern-api/plantstore-java
       - name: fernapi/fern-openapi
