@@ -40,7 +40,7 @@ This repo contains the example Plant Store API defined in [fern](https://github.
 
 The Fern compiler translates this API definition into:
 
-- A [Node.js SDK](https://github.com/fern-api/plantstore-node).
+- A [Node.js SDK](https://github.com/fern-api/plantstore-node)
 - A [Java SDK](https://github.com/fern-api/plantstore-java)
 - An [OpenAPI description](https://github.com/fern-api/plantstore-openapi)
 - A [Postman Collection](https://github.com/fern-api/plantstore-postman)
