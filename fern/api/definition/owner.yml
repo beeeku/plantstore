@@ -1,82 +1,82 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  pet: pet.yml 
+  plant: plant.yml
 
-services: 
-  http: 
+services:
+  http:
     OwnerService:
-      auth: true 
+      auth: true
       base-path: /owner
       endpoints:
-        add: 
-          display-name: Add an owner 
+        add:
+          display-name: Add an owner
           docs: Add a new owner as a customer of the store.
           path: /
           method: POST
-          request: 
+          request:
             name: AddOwnerRequest
             body:
               properties:
-                name: string 
+                name: string
                 age: OwnerAge
-                pets: list<pet.Pet> 
-          response: PetOwner
-          errors: 
+                plants: list<plant.Plant>
+          response: PlantOwner
+          errors:
             - OwnerNotFoundError
-          examples: 
-            - request: 
+          examples:
+            - request:
                 name: Danny
                 age: adult
-                pets: 
+                plants:
                   - id: 309e5e64-7c5b-4433-a645-effa0683228e
-                    category: 
+                    category:
                       id: 2c1e5e33-6633-400f-8d87-bf4e81506dff
                       name: Dog
                     name: Markley
                     photoUrls:
                       smiling: https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-15/168735118_550085559291238_7811318320849179199_n.jpg?stp=dst-jpg_e35&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_cat=110&_nc_ohc=RGWAh2JjszsAX-h3qUI&tn=lDBuWm7D32pYEQeN&edm=ACWDqb8BAAAA&ccb=7-5&ig_cache_key=MjU0NTYxMTczNDk4ODA5NDA2NA%3D%3D.2-ccb7-5&oh=00_AfAW97yhRaCcWwvBLK7uggaNn4SCt0-qyOZjkzmIvfR7rQ&oe=63C15AB3&_nc_sid=1527a3>
                     status: available
-              response: 
+              response:
                 error: OwnerNotFoundError
-                  
-        delete: 
-          display-name: Delete an owner 
+
+        delete:
+          display-name: Delete an owner
           path: /{ownerId}
           path-parameters:
-            ownerId: OwnerId           
+            ownerId: OwnerId
 
-types: 
+types:
   OwnerId: uuid
 
-  OwnerAge: 
-    enum: 
+  OwnerAge:
+    enum:
       - child
       - adult
       - senior
 
-  PetOwner: 
-    union: 
+  PlantOwner:
+    union:
       customer: StoreCustomer
       employee: StoreEmployee
-    
+
   StoreCustomer:
     properties:
-      name: string 
+      name: string
       age: optional<integer>
-      pets: list<pet.Pet>
-      lifetime_spend: double 
+      plants: list<plant.Plant>
+      lifetime_spend: double
       id: OwnerId
-  
-  StoreEmployee:
-    extends: StoreCustomer 
-    properties:
-      employeeId: EmployeeId 
 
-  EmployeeId: 
+  StoreEmployee:
+    extends: StoreCustomer
+    properties:
+      employeeId: EmployeeId
+
+  EmployeeId:
     type: uuid
     docs: a unique identified for each store employee
 
-errors: 
+errors:
   OwnerNotFoundError:
     status-code: 400

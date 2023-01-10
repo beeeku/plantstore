@@ -1,8 +1,8 @@
 name: api
 auth: bearer
 environments:
-  Production: https://api.petstore.com
-  Sandbox: https://sandbox.petstore.com
+  Production: https://api.plantstore.com
+  Sandbox: https://sandbox.plantstore.com
 default-environment: Production
 error-discrimination:
   strategy: status-code
