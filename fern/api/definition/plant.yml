@@ -58,7 +58,7 @@ services:
                     growing: https://i.ibb.co/vk5N4C4/EDAA47-FF-6921-41-EE-ABA1-13-DE3-FCDB4-C0-1-105-c.jpg
                   status: available
             - path-parameters:
-                plantId: az123456789
+                plantId: 971e5e64-7c5b-0033-a645-bcfe0683000b
               response:
                 error: InvalidIdSuppliedError
             - path-parameters:
