@@ -31,6 +31,7 @@ jobs:
 
       - name: Release SDK, Postman, and OpenAPI
         env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           FERN_NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
           FERN_MAVEN_USERNAME: ${{ secrets.FERN_MAVEN_USERNAME }}
           FERN_MAVEN_PASSWORD: ${{ secrets.FERN_MAVEN_PASSWORD }}
