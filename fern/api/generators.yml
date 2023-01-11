@@ -23,7 +23,7 @@ groups:
         github:
           repository: fern-api/plantstore-openapi
       - name: fernapi/fern-postman
-        version: 0.0.32
+        version: 0.0.33
         output:
           location: postman
           api-key: ${FERN_POSTMAN_API_KEY}
