@@ -1,4 +1,5 @@
 name: api
+display-name: Plant Store
 auth: bearer
 environments:
   Production: https://api.plantstore.com
