@@ -36,7 +36,7 @@ Backed by Y Combinator
     </a>
 </div>
 
-This repo contains the example Plant Store API defined in [fern](https://github.com/fern-api/fern).
+This repo contains the example Plant Store API defined in [Fern](https://github.com/fern-api/fern).
 
 The Fern compiler translates this API definition into:
 
