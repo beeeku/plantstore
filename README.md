@@ -73,7 +73,7 @@ groups:
   external:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.0.255-1-g9405afc
+        version: 0.0.257
         output:
           location: npm
           package-name: "@fern-api/plantstore"
@@ -90,11 +90,11 @@ groups:
         github:
           repository: fern-api/plantstore-java
       - name: fernapi/fern-openapi
-        version: 0.0.14
+        version: 0.0.15
         github:
           repository: fern-api/plantstore-openapi
       - name: fernapi/fern-postman
-        version: 0.0.32
+        version: 0.0.33
         output:
           location: postman
           api-key: ${FERN_POSTMAN_API_KEY}
