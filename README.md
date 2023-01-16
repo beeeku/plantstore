@@ -42,7 +42,7 @@ The Fern compiler translates this API definition into:
 
 - A [Node.js SDK](https://github.com/fern-api/plantstore-node)
 - A [Java SDK](https://github.com/fern-api/plantstore-java)
-- An [OpenAPI description](https://github.com/fern-api/plantstore-openapi)
+- An [OpenAPI spec](https://github.com/fern-api/plantstore-openapi)
 - A [Postman Collection](https://github.com/fern-api/plantstore-postman)
 
 # How does it work?
