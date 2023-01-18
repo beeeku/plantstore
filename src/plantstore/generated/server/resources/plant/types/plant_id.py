@@ -18,34 +18,12 @@ class PlantId(pydantic.BaseModel):
     def from_uuid(value: uuid.UUID) -> PlantId:
         return PlantId(__root__=value)
 
-    class Validators:
-        """
-        Use this class to add validators to the Pydantic model.
-
-            @PlantId.Validators.validate
-            def validate(value: uuid.UUID) -> uuid.UUID:
-                ...
-        """
-
-        _validators: typing.ClassVar[typing.List[typing.Callable[[uuid.UUID], uuid.UUID]]] = []
-
-        @classmethod
-        def validate(cls, validator: typing.Callable[[uuid.UUID], uuid.UUID]) -> None:
-            cls._validators.append(validator)
-
-    @pydantic.root_validator(pre=False)
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        value = typing.cast(uuid.UUID, values.get("__root__"))
-        for validator in PlantId.Validators._validators:
-            value = validator(value)
-        return {**values, "__root__": value}
-
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
     class Config:

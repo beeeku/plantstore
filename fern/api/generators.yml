@@ -3,7 +3,7 @@ groups:
   server:
     generators:
       - name: fernapi/fern-fastapi-server
-        version: 0.0.33
+        version: 0.0.34
         output:
           location: local-file-system
           path: ../../src/plantstore/generated/server

@@ -39,47 +39,12 @@ class PlantOwner(pydantic.BaseModel):
         typing.Union[_PlantOwner.Customer, _PlantOwner.Employee], pydantic.Field(discriminator="type")
     ]
 
-    class Validators:
-        """
-        Use this class to add validators to the Pydantic model.
-
-            @PlantOwner.Validators.validate
-            def validate(value: typing.Union[_PlantOwner.Customer, _PlantOwner.Employee]) -> typing.Union[_PlantOwner.Customer, _PlantOwner.Employee]:
-                ...
-        """
-
-        _validators: typing.ClassVar[
-            typing.List[
-                typing.Callable[
-                    [typing.Union[_PlantOwner.Customer, _PlantOwner.Employee]],
-                    typing.Union[_PlantOwner.Customer, _PlantOwner.Employee],
-                ]
-            ]
-        ] = []
-
-        @classmethod
-        def validate(
-            cls,
-            validator: typing.Callable[
-                [typing.Union[_PlantOwner.Customer, _PlantOwner.Employee]],
-                typing.Union[_PlantOwner.Customer, _PlantOwner.Employee],
-            ],
-        ) -> None:
-            cls._validators.append(validator)
-
-    @pydantic.root_validator(pre=False)
-    def _validate(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
-        value = typing.cast(typing.Union[_PlantOwner.Customer, _PlantOwner.Employee], values.get("__root__"))
-        for validator in PlantOwner.Validators._validators:
-            value = validator(value)
-        return {**values, "__root__": value}
-
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().dict(**kwargs_with_defaults)
 
     class Config:

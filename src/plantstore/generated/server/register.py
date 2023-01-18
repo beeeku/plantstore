@@ -11,8 +11,8 @@ import starlette
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
-from .resources.owner.service import AbstractOwnerService
-from .resources.plant.service import AbstractPlantService
+from .resources.owner.service.service import AbstractOwnerService
+from .resources.plant.service.service import AbstractPlantService
 
 
 def register(app: fastapi.FastAPI, *, owner: AbstractOwnerService, plant: AbstractPlantService) -> None:
