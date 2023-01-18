@@ -76,6 +76,7 @@ To re-generate the code, run `fern generate`. The generation is configured in
 `generators.yml` in our docs [here](https://www.buildwithfern.com/docs/compiler/generate#generators-yml).
 
 ```yaml
+# generators.yml
 default-group: server
 groups:
   server:
@@ -114,7 +115,7 @@ class PlantService(AbstractPlantService):
         raise RuntimeError("Not implemented")
 ```
 
-To register the endpoints, you use Fern's `register` function:
+To register the endpoints, we use Fern's `register` function:
 
 ```python
 app = FastAPI()
@@ -126,9 +127,9 @@ register(
 )
 ```
 
-Beyond saving you time, Fern's adds **compile time safety** to the backend.
-If you forget to implement or register any of your endpoints, or your
-endpoint signatures are incorrect, you'll get an error from your type checker.
+Beyond saving us time, Fern's adds **compile time safety** to the backend.
+If we forget to implement or register any of your endpoints, or an
+endpoint signature is incorrect, we'll get an error from the type checker.
 
 ![Missing endpoint mypy error](assets/missing_endpoint.png)
 
@@ -209,3 +210,7 @@ groups:
         github:
           repository: fern-api/plantstore-postman
 ```
+
+# Community
+
+Join the [Discord](https://discord.com/invite/JkkXumPzcG)!
