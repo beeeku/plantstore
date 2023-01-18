@@ -1,4 +1,12 @@
+default-group: server
 groups:
+  server:
+    generators:
+      - name: fernapi/fern-fastapi-server
+        version: 0.0.33
+        output:
+          location: local-file-system
+          path: ../../src/plantstore/generated/server
   external:
     generators:
       - name: fernapi/fern-typescript-sdk
