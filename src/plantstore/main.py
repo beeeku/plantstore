@@ -2,12 +2,19 @@ import uvicorn
 
 from fastapi import FastAPI
 
+from plantstore.generated.server.register import register
+from plantstore.owner import OwnerService
+from plantstore.plant import PlantService
+
+
 app = FastAPI()
 
 
-@app.get("/health")
-def health() -> None:
-    pass
+register(
+    app,
+    owner=OwnerService(),
+    plant=PlantService(),
+)
 
 
 def start() -> None:

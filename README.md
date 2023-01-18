@@ -37,8 +37,13 @@ Backed by Y Combinator
 </div>
 
 This repo contains the example Plant Store API defined in [Fern](https://github.com/fern-api/fern).
+It also contains a FastAPI server that implements the API.
 
-The Fern compiler translates this API definition into:
+On the server side, Fern generates most of the code and adds compile-time safety
+that the API is correctly implemented.
+
+When a release is tagged on this repo, the Fern compiler translates the API
+definition into:
 
 - A [Node.js SDK](https://github.com/fern-api/plantstore-node)
 - A [Java SDK](https://github.com/fern-api/plantstore-java)
@@ -60,16 +65,118 @@ npm install -g fern-api # Installs CLI
 fern check # Checks if the definition is valid
 ```
 
-## Generators
+# Server
 
-The outputs (SDKs, Postman, OpenAPI) are defined in
-[generators.yml](fern/api/generators.yml). You can read more about
-the syntax of `generators.yml` in our docs
+The server is implemented in FastAPI. Nearly all the code is auto-generated from our
+Fern definition - the generated code lives in the
+[generated/](src/plantstore/generated/server) directory.
+
+To re-generate the code, run `fern generate`. The generation is configured in
+[generators.yml](fern/api/generators.yml). You can read more about the syntax of
+`generators.yml` in our docs [here](https://www.buildwithfern.com/docs/compiler/generate#generators-yml).
+
+```yaml
+default-group: server
+groups:
+  server:
+    generators:
+      - name: fernapi/fern-fastapi-server
+        version: 0.0.33
+        output:
+          location: local-file-system
+          path: ../../src/plantstore/generated/server
+  external: ...
+```
+
+The only code we need to write manualy is the business logic of the endpoints, and
+registering the endpoints.
+
+```python
+# owner.py
+class OwnerService(AbstractOwnerService):
+    def add(self, *, body: AddOwnerRequest, auth: ApiAuth) -> PlantOwner:
+        raise RuntimeError("Not implemented")
+
+    def delete(self, *, owner_id: uuid.UUID, auth: ApiAuth) -> None:
+        raise RuntimeError("Not implemented")
+```
+
+```python
+# plant.py
+class PlantService(AbstractPlantService):
+    def add(self, *, body: AddPlantRequest, auth: ApiAuth) -> None:
+        raise RuntimeError("Not implemented")
+
+    def find(self, *, plant_id: uuid.UUID, auth: ApiAuth) -> Plant:
+        raise RuntimeError("Not implemented")
+
+    def delete(self, *, plant_id: uuid.UUID, auth: ApiAuth) -> None:
+        raise RuntimeError("Not implemented")
+```
+
+To register the endpoints, you use Fern's `register` function:
+
+```python
+app = FastAPI()
+
+register(
+    app,
+    owner=OwnerService(),
+    plant=PlantService(),
+)
+```
+
+Beyond saving you time, Fern's adds **compile time safety** to the backend.
+If you forget to implement or register any of your endpoints, or your
+endpoint signatures are incorrect, you'll get an error from your type checker.
+
+![Missing endpoint mypy error](assets/missing_endpoint.png)
+
+## Running the server
+
+You can run the server with:
+
+```
+poetry shell
+poetry install
+poetry run start
+```
+
+You can cURL the server. Right now all the endpoints throw a "not implemented"
+error, so you'll get a 500 response.
+
+```
+curl \
+  -X DELETE \
+  --header 'Authorization: Bearer token' \
+  'localhost:8080/owner/309e5e64-7c5b-4433-a645-effa0683228e'
+```
+
+# SDKs & Postman
+
+When a release is tagged on this repo, Fern will generate SDKs and
+a Postman collection. This is handled by a [GitHub workflow](https://github.com/fern-api/plantstore-api/blob/main/.github/workflows/ci.yml),
+which runs:
+
+```
+fern generate --group external --version <version>
+```
+
+This generates:
+
+- A [Node.js SDK](https://github.com/fern-api/plantstore-node)
+- A [Java SDK](https://github.com/fern-api/plantstore-java)
+- An [OpenAPI spec](https://github.com/fern-api/plantstore-openapi)
+- A [Postman Collection](https://github.com/fern-api/plantstore-postman)
+
+These outputs are configured in [generators.yml](fern/api/generators.yml). You
+can read more about the syntax of `generators.yml` in our docs
 [here](https://www.buildwithfern.com/docs/compiler/generate#generators-yml).
 
 ```yaml
 # generators.yml
 groups:
+  server: ...
   external:
     generators:
       - name: fernapi/fern-typescript-sdk
@@ -102,13 +209,3 @@ groups:
         github:
           repository: fern-api/plantstore-postman
 ```
-
-To trigger the generators run:
-
-```
-fern generate --group external --version <version>
-```
-
-Tagging a release on this repo invokes `fern generate`, which runs the compiler
-and pushes the code to the repos defined in `generators.yml`. This is configured
-in a [Github workflow](https://github.com/fern-api/plantstore-api/blob/main/.github/workflows/ci.yml).

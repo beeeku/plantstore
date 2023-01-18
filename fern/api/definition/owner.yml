@@ -42,6 +42,7 @@ services:
 
         delete:
           display-name: Delete an owner
+          method: DELETE
           path: /{ownerId}
           path-parameters:
             ownerId: OwnerId

@@ -6,4 +6,5 @@ environments:
   Sandbox: https://sandbox.plantstore.com
 default-environment: Production
 error-discrimination:
-  strategy: status-code
+  strategy: property
+  property-name: error
